@@ -4,5 +4,7 @@ Uses haarcascade_eye.xml cascade to detect the eyes, performs Histogram Equaliza
  
 According to these values, eye's position: either right or left is determined. 
 Thanks.
-**Refer to the documentation at opencv.org for explanation of each operations ** 
+
+
+Refer to the documentation at opencv.org for explanation of each operations 
 Thanks.
