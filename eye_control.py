@@ -16,14 +16,14 @@ def thresholding( value ):  # function to threshold and give either left or righ
 		left_counter=left_counter+1		#increment left counter 
 
 		if (left_counter>th_value):  #if left counter is greater than threshold value 
-			print 'RIGHT'  #the eye is left
+			print ('RIGHT')  #the eye is left
 			left_counter=0   #reset the counter
 
 	elif(value>=54):  # same procedure for right eye
 		right_counter=right_counter+1
 
 		if(right_counter>th_value):
-			print 'LEFT'
+			print ('LEFT')
 			right_counter=0
 while 1:
 	ret, frame = cap.read()
@@ -43,14 +43,14 @@ while 1:
 			cv2.rectangle(frame, (x,y), ((x+w),(y+h)), (0,0,255),1)	 #draw rectangle around eyes
 			cv2.line(frame, (x,y), ((x+w,y+h)), (0,0,255),1)   #draw cross
 			cv2.line(frame, (x+w,y), ((x,y+h)), (0,0,255),1)
-			pupilFrame = cv2.equalizeHist(frame[y+(h*.25):(y+h), x:(x+w)]) #using histogram equalization of better image. 
+			pupilFrame = cv2.equalizeHist(frame) #using histogram equalization of better image. 
 			cl1 = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8)) #set grid size
 			clahe = cl1.apply(pupilFrame)  #clahe
 			blur = cv2.medianBlur(clahe, 7)  #median blur
-			circles = cv2.HoughCircles(blur ,cv2.cv.CV_HOUGH_GRADIENT,1,20,param1=50,param2=30,minRadius=7,maxRadius=21) #houghcircles
+			circles = cv2.HoughCircles(blur ,cv2.HOUGH_GRADIENT,1,20,param1=50,param2=30,minRadius=7,maxRadius=21) #houghcircles
 			if circles is not None: #if atleast 1 is detected
 				circles = np.round(circles[0, :]).astype("int") #change float to integer
-				print 'integer',circles
+				print ('integer',circles)
 				for (x,y,r) in circles:
 					cv2.circle(pupilFrame, (x, y), r, (0, 255, 255), 2)
 					cv2.rectangle(pupilFrame, (x - 5, y - 5), (x + 5, y + 5), (0, 128, 255), -1)
